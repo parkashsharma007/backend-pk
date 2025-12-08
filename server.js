@@ -16,14 +16,18 @@ const DefaultSchema = new mongoose.Schema({
 });
 
 
-const AllDataModel = mongoose.model("youtubealldatafile", DefaultSchema, "youtubealldatafile");
+const AllDataModel = mongoose.model("youtube", DefaultSchema);
 
 
 const createRoute = (routeName, Model) => {
   app.get(`/api/${routeName}`, async (req, res) => {
     try {
       const data = await Model.find();
+      console.log(data);
+      return
+      
       res.status(200).json(data);
+    
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
