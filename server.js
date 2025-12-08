@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect("mongodb+srv://pkjajra105_db_user:hxbJgDPJr3GkjNCo@cluster0.tobx2e1.mongodb.net/youtubealldata")
+mongoose.connect("mongodb+srv://pkjajra105_db_user:hxbJgDPJr3GkjNCo@cluster0.tobx2e1.mongodb.net/youtube")
   .then(() => console.log("MongoDB Connected"))
   .catch(err => console.log("MongoDB Error:", err));
 
