@@ -23,11 +23,8 @@ const createRoute = (routeName, Model) => {
   app.get(`/api/${routeName}`, async (req, res) => {
     try {
       const data = await Model.find();
-      console.log(data);
-      return
-      
-      res.status(200).json(data);
-    
+      const flatData = data.map(item => item.data || item);
+      res.status(200).json(flatData);
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
