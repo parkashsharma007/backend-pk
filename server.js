@@ -1,39 +1,21 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
+const express = require('express')
+const mongoose = require('mongoose')
+const url = 'mongodb://localhost:27017/reactO'
+const cors=require('cors')
+const app = express()
 
-const app = express();
-app.use(express.json());
-app.use(cors());
+const port = 8050
+app.use(cors())
 
-mongoose.connect("mongodb+srv://pkjajra105_db_user:hxbJgDPJr3GkjNCo@cluster0.tobx2e1.mongodb.net/youtube")
-  .then(() => console.log("MongoDB Connected"))
-  .catch(err => console.log("MongoDB Error:", err));
-
-
-const DefaultSchema = new mongoose.Schema({
-  data: mongoose.Schema.Types.Mixed
-});
+    app.use(express.json());
+mongoose.connect(url)
+    .then(() => { console.log("connection is successful") })
+    .catch((err) => { console.log("database is not connecting", err )})
 
 
-const AllDataModel = mongoose.model("youtube", DefaultSchema);
+const userRouter = require('./Router/userrouter')
+app.use('/users', userRouter)
 
-
-const createRoute = (routeName, Model) => {
-  app.get(`/api/${routeName}`, async (req, res) => {
-    try {
-      const data = await Model.find();
-      const flatData = data.map(item => item.data || item);
-      res.status(200).json(flatData);
-    } catch (err) {
-      res.status(500).json({ error: err.message });
-    }
-  });
-};
-
-
-createRoute("all", AllDataModel);
-
-app.listen(8080, () => {
-  console.log("Server running at http://localhost:8080");
-});
+app.listen(port, () => {
+    console.log(`server is running yas on ${port}`)
+})
